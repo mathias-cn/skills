@@ -62,8 +62,9 @@ Faça **uma pergunta por vez**, sempre oferecendo 3-4 sugestões concretas basea
 9. **Idioma**: inglês (mercado maior) ou português/outro.
 10. **Duração-alvo por vídeo**: pergunte diretamente (1h, 2h, 3h ou um mix longo de 8h+).
 11. **Formato da descrição**: sugerir com base nos 7 estilos observados (tracklist nomeada, narrativa curta, texto reflexivo, manifesto com coleções, checklist+SEO dump, ou boas-vindas fixa). Se optar por tracklist, cada faixa da Fase 2 precisa de nome próprio.
+12. **Nome do canal**: só depois de tudo acima definido (tema, gênero, mascote, idioma), sugira 5-8 opções de nome coerentes com a identidade montada, no mesmo espírito curto/evocativo dos arquétipos de referência (ex. "Stoic State", "Quest & Rest", "Lemuria", "Villain's Symphony", "Shibuya After Rain") — nunca nomes genéricos tipo "Lofi Music Channel". Deixe o usuário escolher um, pedir mais opções, ou informar que já tem nome definido.
 
-Ao fim, resuma a identidade consolidada em um bloco curto antes de passar para a Fase 2, e confirme com o usuário.
+Ao fim, resuma a identidade consolidada (incluindo o nome escolhido) em um bloco curto antes de passar para a Fase 2, e confirme com o usuário.
 
 ## Personagem principal e Character Sheet (se houver mascote)
 
