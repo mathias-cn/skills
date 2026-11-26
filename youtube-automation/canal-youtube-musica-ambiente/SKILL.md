@@ -75,9 +75,19 @@ Se o canal tem (ou vai ter) um personagem/mascote recorrente, pergunte:
 - **Se já tem**: peça para descrever (espécie/forma, roupa/acessórios fixos, paleta de cores, expressão/personalidade visual, qualquer traço distintivo). Se o usuário já tiver imagens dele, avise que pode carregá-las direto nos nodes "Imagem de referência 1/2/3" do grupo Character Sheet no ComfyUI.
 - **Se não tem**: construa a descrição junto, uma pergunta por vez, coerente com o tema/estilo visual já definidos na Fase 1 (espécie/forma do personagem, roupa/acessórios, paleta, expressão).
 
-Com a descrição fechada, monte um **prompt de character sheet** pronto para colar no node "Character Sheet - Prompt" do workflow do ComfyUI, seguindo sempre esta estrutura (fundo branco, múltiplos ângulos, igual a uma folha de referência de personagem/lookbook):
+Pergunte também (isso muda o template do prompt, ver abaixo): **"Esse personagem é uma figura humana/antropomórfica com roupa (ou um bicho/criatura ilustrada), ou é um objeto inanimado — estátua, busto, escultura, mascote não-humano (ex. arquétipo 1 'Stoic State', que usa um busto de mármore)?"**
+
+Com a descrição fechada, monte um **prompt de character sheet** pronto para colar no node "Character Sheet - Prompt" do workflow do ComfyUI. Use o template conforme o tipo de personagem — **misturar os dois** é a causa mais comum de erro (o Krea-2 interpreta palavras como "outfit", "facial features" e "fashion lookbook photography style" como pedido de um humano real vestido de preto, mesmo quando o resto do prompt descreve uma estátua de pedra/concreto — produz uma pessoa de verdade em vez do personagem):
+
+**Personagem humano/antropomórfico (usa roupa, expressão facial humana):**
 
 > `character reference sheet, turnaround sheet, consistent character design, same outfit and facial features in every view, clean pure white background, studio lighting, fashion lookbook photography style, large full body front view, full body side profile view, full body back view, two close-up face portrait crops, [descrição específica do personagem: espécie/forma, roupa, cores, acessórios, expressão], high detail, no text, no watermark`
+
+**Personagem objeto/estátua/escultura (não-humano — ex. busto de mármore, concreto, estátua):**
+
+> `turnaround reference sheet of a sculpture, the same inanimate statue shown from multiple angles, sculpted figure, not a human being, no skin, no real person, no clothing, consistent material, pose and proportions in every view, clean pure white background, studio museum lighting, large view of the full statue from the front, full statue from the side profile, full statue from the back, two close-up crops of the statue's head, [descrição específica: material/textura, cor, pose, rachaduras ou detalhes distintivos], high detail, no text, no watermark`
+
+Para o template de estátua, repita palavras como "statue"/"sculpture"/"not a human being" logo no início e de novo perto da descrição específica — o Krea-2 não usa prompt negativo de verdade nesse fluxo (a conditioning negativa é zerada, não é texto), então a única forma de "excluir" a interpretação humana é reforçar a estátua várias vezes na própria descrição positiva, em vez de confiar numa única menção.
 
 Explique ao usuário que, no ComfyUI, esse grupo "Character Sheet": (1) roda só com esse prompt se ele não tiver imagens de referência, ou (2) usa imagens de referência (se ele carregar 1-3 fotos/desenhos do personagem e marcar o checkbox "Usar imagem de referência?") para manter a aparência consistente. A imagem final dessa folha alimenta automaticamente os checkboxes "Usar imagem de referência?" dos grupos de Thumbnail e de Foto de Perfil do YouTube no mesmo workflow — assim o personagem aparece consistente em thumbnails e na foto de perfil do canal.
 
