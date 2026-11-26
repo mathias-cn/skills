@@ -49,12 +49,26 @@ Use tags de seção reais que o ACE-Step reconhece — `[Intro]`, `[Verse]`, `[C
 
 1. **Intro**: textura mínima, só 1-2 elementos entrando devagar.
 2. **Verse/seção principal**: camada principal estabelecida (pad/synth), movimento bem sutil.
-3. **Chorus/seção de destaque**: adiciona 1 camada melódica ou motívica discreta (sino, mallet, lead suave) — sem crescer em volume, só em interesse.
+3. **Chorus/seção de destaque**: adiciona 1 camada melódica/motívica discreta — **varie qual** (synth lead, corda com arco longo, piano felt, pad de sopro, textura granular) **a cada faixa do mesmo vídeo**. Nunca repita a mesma escolha (ex. sino/mallet/glockenspiel) em várias das 8 faixas — ver "Erro recorrente" abaixo.
 4. **Bridge/seção de respiro**: tira camadas, deixa mais vazio.
 5. **Retorno**: traz de volta a textura principal, eventualmente reintroduzindo a camada melódica.
 6. **Outro**: volta ao mínimo, final limpo (bom para loop/corte).
 
 Dimensione a duração aparente de cada seção pela duração real da faixa (uma faixa de 5 min sustenta seções mais longas/repetidas que uma de 2 min).
+
+## Erro recorrente observado em testes reais — timbre "sino/shimmer" grudado a faixa inteira
+
+Testado com o usuário: um lote de 8 faixas que usava palavras como "shimmer", "chime", "bell-like", "metallic resonance" (mesmo como "acento ocasional") saiu com esse timbre **tocando o tempo inteiro**, em quase todas as faixas, soando repetitivo e nada "inspirador". Causas identificadas (cruzadas com relatos públicos de prompting do ACE-Step):
+
+- **Tags cheias de adjetivo/clima e pobres em instrumento concreto** ("calm, contemplative, slow-evolving, vast reverb...") fazem o modelo cair no "preenchimento genérico" do gênero — e esse preenchimento padrão de ambient/cinematic lento tende a ser exatamente um ornamento tipo sino/music-box/glockenspiel. Nomear poucos instrumentos concretos evita isso.
+- **Uma palavra como "shimmer"/"chime"/"bell" no Tags ou repetida na Letra é tratada como característica da faixa inteira**, não como um acento pontual de uma seção — o modelo não tem como saber que era pra ser "só no chorus, de vez em quando". Se quiser um acento assim, ele deve aparecer **só na seção do Chorus em prosa**, nunca no campo Tags.
+- **Tags de seção ([Verse]/[Chorus]/[Bridge]) sem instrumento nomeado** tendem a não mudar muito o timbre sozinhas — elas funcionam melhor quando a prosa de cada seção nomeia o que entra/sai (instrumento concreto), não só o clima.
+
+**Regras daqui pra frente**:
+1. No Tags, liste **4-6 instrumentos/fontes sonoras concretas** (ex. "analog synth pad, bowed cello drone, felt piano, tape texture") + BPM/gênero — minimize adjetivos soltos de clima/produção ("calm", "cinematic", "atmospheric" são aceitáveis em pequena dose, mas nunca a maioria das palavras do Tags).
+2. Não repita a mesma palavra de "ornamento" (sino/chime/shimmer/glockenspiel/bell/music-box) em mais de **uma** das 8 faixas de um vídeo. Prefira variar entre: synth lead, corda, piano, sopro, textura granular/ruído, arpejo de synth modular — cada faixa com um "instrumento-âncora" diferente das outras.
+3. Na Letra, prefira nomear instrumentos concretos entrando/saindo por seção ("piano enters alone", "cello drone joins underneath", "piano drops out") a parágrafos descritivos de clima/sensação sem instrumento nomeado.
+4. Se usar uma palavra de textura como "shimmer"/"bell"/"chime" nesta faixa, ela só pode aparecer **uma vez**, dentro da seção específica onde deve soar (ex. só no Chorus), nunca no Tags e nunca repetida em Verse+Chorus+Bridge.
 
 ## Regras ACE-Step específicas (recap)
 
