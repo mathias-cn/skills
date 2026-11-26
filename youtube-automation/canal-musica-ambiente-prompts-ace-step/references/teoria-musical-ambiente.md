@@ -35,46 +35,39 @@ Harmonia modal (centro tonal por repetição/drone, não por cadência V→I) é
 | **Mixolydian** | Levemente mais quente/aberto, sem tensão de dominante | Variação sutil para não repetir sempre Dorian/Aeolian |
 | Evitar: Phrygian, Locrian | Tensos, instáveis, "sombrios" | Só se o usuário pedir deliberadamente uma faixa mais inquietante (incomum neste canal) |
 
-Dica prática: o campo "escala tonal" do ACE-Step aceita tônica + maior/menor (ex. `C major`, `A minor`). Para sugerir um modo (Dorian, Lydian etc.) sem widget dedicado de modo, escolha a tônica/maior-menor mais próxima e reforce o caráter modal na descrição em prosa do "Prompt da música" (ex. citar "a floating, major-but-unresolved quality" para Lydian, ou "a cool, static minor color" para Dorian) — o texto da letra é o que carrega a nuance modal real, o widget só define a tônica/modo-base.
+Dica prática: o campo "escala tonal" do ACE-Step aceita tônica + maior/menor (ex. `C major`, `A minor`). Para sugerir um modo (Dorian, Lydian etc.) sem widget dedicado de modo, escolha a tônica/maior-menor mais próxima; o caráter modal (ex. "floating" para Lydian, "cool/static" para Dorian) pode aparecer como 1 palavra isolada no Tags (ver fórmula abaixo), mas não é mais descrito em prosa — ver "Formato padrão atual" abaixo.
 
 ## Groove e dinâmica
 
 - Pulso mínimo ou ausente; quando houver, mantenha constante, sem variações bruscas, sem fills.
-- Dinâmica deve ficar numa faixa estreita do início ao fim — mudanças de seção são **texturais** (camada entra/sai), não **energéticas** (sem "explosões"/drops).
-- Seção mais "fria" de uma faixa (equivalente a uma ponte) deve tirar camadas, não baixar e depois disparar de volta com força.
+- Dinâmica deve ficar numa faixa estreita do início ao fim — sem "explosões"/drops, sem builds de energia.
 
-## Arco de forma recomendado (para o "Prompt da música")
+## Formato padrão atual (validado com o usuário, 2ª iteração) — Tags densa + Letra mínima
 
-Use tags de seção reais que o ACE-Step reconhece — `[Intro]`, `[Verse]`, `[Chorus]`, `[Bridge]`, `[Breakdown]`, `[Outro]` — nunca contagem de compassos ("4 bars" etc.), que o modelo não executa literalmente. Dentro de cada seção, descreva em prosa:
+**Histórico rápido**: duas iterações anteriores foram testadas e **reprovadas pelo usuário em geração real**: (1) um lote com Tags cheia de adjetivo de clima + Letra em prosa estruturada por seção saiu repetitivo, com um ornamento (sino/shimmer) grudado na faixa inteira; (2) mesmo depois de trocar os instrumentos e manter a Letra em prosa por seção, o resultado ainda não ficou bom. O usuário então forneceu a fórmula abaixo (baseada em prática real com IAs generativas de música) como o formato a seguir **a partir de agora por padrão**. Não volte à prosa estruturada por seção a menos que o usuário peça explicitamente para testar isso de novo.
 
-1. **Intro**: textura mínima, só 1-2 elementos entrando devagar.
-2. **Verse/seção principal**: camada principal estabelecida (pad/synth), movimento bem sutil.
-3. **Chorus/seção de destaque**: adiciona 1 camada melódica/motívica discreta — **varie qual** (synth lead, corda com arco longo, piano felt, pad de sopro, textura granular) **a cada faixa do mesmo vídeo**. Nunca repita a mesma escolha (ex. sino/mallet/glockenspiel) em várias das 8 faixas — ver "Erro recorrente" abaixo.
-4. **Bridge/seção de respiro**: tira camadas, deixa mais vazio.
-5. **Retorno**: traz de volta a textura principal, eventualmente reintroduzindo a camada melódica.
-6. **Outro**: volta ao mínimo, final limpo (bom para loop/corte).
+**A partir de agora, o padrão é**:
+- **Letra ("Prompt da música") = apenas `[instrumental]`.** Nada de tags de seção, nada de prosa de instrumentação. Simples assim.
+- **Tags (estilo) = uma única lista densa, separada por vírgula**, construída nesta ordem (4 blocos, sem rotular os blocos no texto final — é só a ordem de composição):
+  1. **Estilo + Função**: ex. `deep space ambient`, `minimalist cinematic ambient`, `dark ambient cinematic underscore`, `atmospheric cinematic instrumental`, `deep focus`.
+  2. **Elementos + Textura**: 3-5 instrumentos/fontes sonoras **concretas** (não adjetivos soltos) — ex. `warm evolving synth pads`, `deep sub drone`, `soft felt piano notes`, `subtle granular texture`, `bowed cello`, `sparse plucked guitar`, `distant synth swells`, `vast hall/cathedral reverb`.
+  3. **Ritmo + Energia**: `slow tempo`/`slow pacing`, `beatless`, `low energy`, `meditative`, `hypnotic` ou `calm`/`peaceful`/`moody` (escolha 1-2, não os três).
+  4. **Restrição** (sempre as mesmas, em todas as 8 faixas do vídeo): `no drums`, `no percussion`, `no vocals`, `no sudden drops`, `no energetic build-up`, `instrumental only`.
 
-Dimensione a duração aparente de cada seção pela duração real da faixa (uma faixa de 5 min sustenta seções mais longas/repetidas que uma de 2 min).
+**Evite nas Tags**: `epic`, `driving`, `cinematic trailer`, `energetic` — e qualquer palavra que sugira clímax/ação (puxa o modelo para fora do foco calmo). Se mesmo assim a IA acelerar ou meter batida, reforce ainda mais `beatless`, `no drums`, `slow movement`.
 
-## Erro recorrente observado em testes reais — timbre "sino/shimmer" grudado a faixa inteira
+**O que varia entre as 8 faixas do mesmo vídeo**: só o bloco 2 (Elementos + Textura) — cada faixa com um par/trio de instrumentos-âncora diferente (ex. synth pad + cello numa, felt piano + brass pad noutra, drone + synth sequencer noutra) — e o bloco 1 (Estilo + Função) pode variar entre as 3 sub-variações do gênero (deep space ambient / cinematic introspective minimal / dark & moody focus). Os blocos 3 e 4 (ritmo/restrição) ficam praticamente **idênticos** nas 8 — isso é intencional, é o que mantém a identidade sonora do vídeo e trava o modelo fora de bateria/vocais/drops.
 
-Testado com o usuário: um lote de 8 faixas que usava palavras como "shimmer", "chime", "bell-like", "metallic resonance" (mesmo como "acento ocasional") saiu com esse timbre **tocando o tempo inteiro**, em quase todas as faixas, soando repetitivo e nada "inspirador". Causas identificadas (cruzadas com relatos públicos de prompting do ACE-Step):
-
-- **Tags cheias de adjetivo/clima e pobres em instrumento concreto** ("calm, contemplative, slow-evolving, vast reverb...") fazem o modelo cair no "preenchimento genérico" do gênero — e esse preenchimento padrão de ambient/cinematic lento tende a ser exatamente um ornamento tipo sino/music-box/glockenspiel. Nomear poucos instrumentos concretos evita isso.
-- **Uma palavra como "shimmer"/"chime"/"bell" no Tags ou repetida na Letra é tratada como característica da faixa inteira**, não como um acento pontual de uma seção — o modelo não tem como saber que era pra ser "só no chorus, de vez em quando". Se quiser um acento assim, ele deve aparecer **só na seção do Chorus em prosa**, nunca no campo Tags.
-- **Tags de seção ([Verse]/[Chorus]/[Bridge]) sem instrumento nomeado** tendem a não mudar muito o timbre sozinhas — elas funcionam melhor quando a prosa de cada seção nomeia o que entra/sai (instrumento concreto), não só o clima.
-
-**Regras daqui pra frente**:
-1. No Tags, liste **4-6 instrumentos/fontes sonoras concretas** (ex. "analog synth pad, bowed cello drone, felt piano, tape texture") + BPM/gênero — minimize adjetivos soltos de clima/produção ("calm", "cinematic", "atmospheric" são aceitáveis em pequena dose, mas nunca a maioria das palavras do Tags).
-2. Não repita a mesma palavra de "ornamento" (sino/chime/shimmer/glockenspiel/bell/music-box) em mais de **uma** das 8 faixas de um vídeo. Prefira variar entre: synth lead, corda, piano, sopro, textura granular/ruído, arpejo de synth modular — cada faixa com um "instrumento-âncora" diferente das outras.
-3. Na Letra, prefira nomear instrumentos concretos entrando/saindo por seção ("piano enters alone", "cello drone joins underneath", "piano drops out") a parágrafos descritivos de clima/sensação sem instrumento nomeado.
-4. Se usar uma palavra de textura como "shimmer"/"bell"/"chime" nesta faixa, ela só pode aparecer **uma vez**, dentro da seção específica onde deve soar (ex. só no Chorus), nunca no Tags e nunca repetida em Verse+Chorus+Bridge.
+**Exemplos de referência (fornecidos pelo usuário, usar como modelo literal de tom/vocabulário)**:
+- `Deep space ambient, dark atmospheric pads, slow evolving drones, subtle granular textures, vast hall reverb, beatless, no drums, no percussion, no vocals, calm, hypnotic, deep focus, instrumental`
+- `Minimalist cinematic ambient, soft felt piano, warm sustained strings, gentle tape texture, spacious reverb, slow pacing, no drums, no sudden changes, introspective, peaceful, instrumental only`
+- `Dark ambient cinematic underscore, deep low-end drone, eerie distant synth swells, sparse atmospheric plucks, heavy reverb, no beat, no percussion, no vocals, moody, focused, instrumental`
 
 ## Regras ACE-Step específicas (recap)
 
-- **Tags** = legenda curta (gênero, instrumentos, clima). Nunca bpm/escala/tempo aqui — isso vai nos widgets dedicados do node.
-- **Letra** = `[instrumental]` + tags de seção + instrumentação em prosa. É aqui que a estrutura e o caráter modal/dinâmico da faixa são descritos.
-- Não prometa precisão de compasso — o vocabulário de estrutura do ACE-Step é por seção, não por contagem de bars.
+- **Tags** = a lista densa de 4 blocos descrita acima (estilo+função, elementos+textura, ritmo+energia, restrição). Nunca bpm/escala/tempo numérico aqui — isso vai nos widgets dedicados do node.
+- **Letra** = `[instrumental]`, só isso, no formato padrão atual (ver acima). Só use tags de seção (`[Intro]`/`[Verse]`/`[Chorus]`/`[Bridge]`/`[Outro]`) + prosa se o usuário pedir explicitamente para testar essa variação de novo.
+- Não prometa precisão de compasso — o vocabulário de estrutura do ACE-Step (quando usado) é por seção, não por contagem de bars.
 - `duration`/`seconds` é um alvo real que o modelo tenta cumprir (diferente do YuE2, que usava um teto de `max_duration`).
 
 ## Cross-reference
