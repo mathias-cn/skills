@@ -10,7 +10,8 @@ As skills são organizadas por segmento/área, cada um em uma pasta na raiz do r
 |---|---|---|
 | [`marketing`](marketing/README.md) | [`prospeccao-vendas-sites`](marketing/prospeccao-vendas-sites/SKILL.md) | Playbook de prospecção e venda de sites e landing pages para pequenos negócios: garimpo de leads, abordagem fria (método GIC), follow-up, prévia, reunião, objeções, preço, nichos e pós-venda. |
 | [`youtube-automation`](youtube-automation/README.md) | [`canal-youtube-musica-ambiente`](youtube-automation/canal-youtube-musica-ambiente/SKILL.md) | Cria a identidade visual e musical de um canal de YouTube de música ambiente (foco, relax, estudo, flowstate, sono) e gera sugestões completas de vídeo: thumbnail/imagem (estática ou prompt de animação em loop), título, descrição, character sheet do personagem principal e prompts de música para o YuE2 (ComfyUI). |
-| [`youtube-automation`](youtube-automation/README.md) | [`canal-musica-ambiente-prompts-ace-step`](youtube-automation/canal-musica-ambiente-prompts-ace-step/SKILL.md) | Gera os prompts (tags + letra estruturada + bpm/escala/compasso/duração) das 8 músicas-base do workflow ACE-Step 1.5 (ComfyUI) do canal de música ambiente, aplicando teoria musical de ambient/foco. |
+| [`youtube-automation`](youtube-automation/README.md) | [`canal-musica-ambiente-prompts-ace-step`](youtube-automation/canal-musica-ambiente-prompts-ace-step/SKILL.md) | Gera os prompts (tags + letra estruturada + bpm/escala/compasso/duração) das 8 músicas-base do workflow ACE-Step 1.5 (ComfyUI) do canal de música ambiente, cobrindo qualquer gênero musical (não só ambient/foco) via a skill `music-composition`. |
+| [`musica`](musica/README.md) | [`music-composition`](musica/music-composition/SKILL.md) | Skill completa de teoria musical e composição (harmonia, melodia, forma, ritmo/groove, orquestração, mais de 24 gêneros, songwriting). Fork verbatim de `SJY051/music-composition` (CC BY 4.0). |
 
 Cada segmento tem seu próprio `README.md` listando as skills daquela área com mais detalhe.
 
@@ -82,7 +83,7 @@ A skill `prospeccao-vendas-sites` foi escrita a partir da transcrição e dos sl
 
 A skill `canal-youtube-musica-ambiente` foi construída a partir da análise de canais reais de música ambiente no YouTube (identidade visual, títulos, descrições) e do guia oficial de prompts do YuE2.
 
-A referência de teoria musical da skill `canal-musica-ambiente-prompts-ace-step` (`references/teoria-musical-ambiente.md`) é adaptada e sintetizada a partir da skill [`SJY051/music-composition`](https://github.com/SJY051/music-composition), cuja documentação é licenciada sob CC BY 4.0.
+A skill `music-composition` (segmento `musica`) é um fork verbatim de [`SJY051/music-composition`](https://github.com/SJY051/music-composition) (commit `07cecf9c`, v1.0), cuja documentação é licenciada sob CC BY 4.0 — ver `musica/music-composition/VENDORED-FROM.md` para detalhes de atribuição. A referência de teoria musical da skill `canal-musica-ambiente-prompts-ace-step` (`references/teoria-musical-ambiente.md`) é uma síntese própria, com o mesmo fork como fallback para gêneros fora do recorte ambient/foco.
 
 ## Licença
 

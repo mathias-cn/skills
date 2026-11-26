@@ -1,6 +1,6 @@
 # Teoria musical aplicada a ambient/foco (ACE-Step)
 
-> Conteúdo adaptado e sintetizado a partir da skill de composição musical [`SJY051/music-composition`](https://github.com/SJY051/music-composition) (documentação sob licença CC BY 4.0), com foco específico no nicho deste canal: música ambiente instrumental para foco/relaxamento/sono, gerada com ACE-Step. Para teoria fora deste recorte, clone o repositório original e use `references/00-navigation.md` dele.
+> Conteúdo adaptado e sintetizado a partir da skill de composição musical [`SJY051/music-composition`](https://github.com/SJY051/music-composition) (documentação sob licença CC BY 4.0), com foco específico no nicho deste canal: música ambiente instrumental para foco/relaxamento/sono, gerada com ACE-Step. Para qualquer outro gênero, use a skill completa vendorizada em `../../../musica/music-composition/` (ver `SKILL.md` do pacote de prompts ACE-Step, seção "Qual referência de teoria musical usar").
 
 ## O gênero: ambient / drone contemplativo
 

@@ -1,9 +1,9 @@
 ---
 name: canal-musica-ambiente-prompts-ace-step
-description: Use quando o usuário quiser gerar os prompts de música (tags, letra/prompt estruturado, bpm, escala tonal, compasso, duração) para as 8 músicas-base do workflow ACE-Step 1.5 (ComfyUI) do canal de YouTube de música ambiente/foco. Pergunta se já existe um estilo definido e a duração do vídeo antes de gerar.
+description: Use quando o usuário quiser gerar os prompts de música (tags, letra/prompt estruturado, bpm, escala tonal, compasso, duração) para as 8 músicas-base do workflow ACE-Step 1.5 (ComfyUI) do canal de YouTube de música ambiente/foco — em qualquer gênero musical, não só ambient. Pergunta estilo/gênero, se já existe um definido, e a duração do vídeo antes de gerar.
 metadata:
   language: pt-BR
-  version: "1.0"
+  version: "1.1"
 ---
 
 # Gerador de prompts ACE-Step para o canal de música ambiente
@@ -27,31 +27,43 @@ Um loop aninhado roda cada uma das 8 músicas **3 vezes** (seeds diferentes a ca
 
 Siga esta ordem, uma pergunta de cada vez:
 
-1. **Estilo**: pergunte se o usuário já tem um estilo definido para este vídeo/canal, ou se quer criar um novo agora. Se o canal já tem identidade estabelecida (ambient minimalista/drone, synth pads com melodias "inspiradoras", estética brutalista, instrumental, sem vocais/bateria), use isso como base por padrão e pergunte só se este vídeo específico quer uma variação de tema (ex.: "sono profundo" vs "foco intenso" vs "relaxamento").
+1. **Estilo/gênero**: pergunte se o usuário já tem um estilo definido para este vídeo, ou se quer criar um novo agora. Se nada for dito, assuma a identidade já estabelecida do canal (ambient minimalista/drone, synth pads com melodias "inspiradoras", estética brutalista, instrumental, sem vocais/bateria) e pergunte só se este vídeo específico quer uma variação de tema (ex.: "sono profundo" vs "foco intenso" vs "relaxamento"). Mas esta skill **não está limitada a ambient** — se o usuário pedir um gênero diferente (lo-fi, piano clássico, synthwave, jazz instrumental, música regional etc.), siga normalmente usando a seção "Qual referência de teoria musical usar" abaixo para decidir a fonte certa.
 2. **Duração do vídeo**: pergunte quantas horas/minutos o vídeo deve ter.
 3. **Calcule a duração por faixa**:
    ```
    segundos_por_faixa = (duração_do_vídeo_em_minutos * 60) / 24
    ```
    Informe o resultado ao usuário antes de gerar os prompts (ex.: vídeo de 2h → 7200s / 24 = 300s = 5 min por faixa). Esse valor vai para a `Duracao` das 8 músicas.
-4. **Gere as 8 músicas**, uma de cada vez ou todas juntas (pergunte a preferência se não ficar claro), seguindo a seção "Como escrever cada música" abaixo.
+4. **Gere as 8 músicas**, uma de cada vez ou todas juntas (pergunte a preferência se não ficar claro), seguindo as seções "Qual referência de teoria musical usar" e "Regras ACE-Step específicas" abaixo.
 5. Devolva no formato exato da seção "Formato de saída".
 
-## Como escrever cada música
+## Qual referência de teoria musical usar
 
-Para cada uma das 8 músicas, consulte `references/teoria-musical-ambiente.md` (teoria musical aplicada a ambient/foco, com matriz de bpm/escala/modo) antes de decidir bpm, escala tonal e o arco de seções. Varie levemente bpm e escala/modo entre as 8 músicas (dentro da identidade do canal) para o vídeo não soar repetitivo, mas mantenha a mesma "família sonora".
+Esta skill não escreve teoria musical do zero — ela **adapta e formata** o que uma referência de teoria diz para os campos do ACE-Step. Escolha a fonte pelo gênero/estilo definido no passo 1:
 
-**Tags (estilo)**: uma frase curta com gênero + instrumentos + clima + palavras-chave de "sem vocal/bateria" (ex.: `minimalist ambient drone, warm analog synth pads, slow evolving texture, calm, focused, instrumental, no vocals, no drums, no percussion`). Nunca inclua bpm, escala ou compasso aqui — isso vai nos campos dedicados.
+- **Ambient/drone/foco (identidade padrão do canal, ou qualquer variação próxima dela)**: use `references/teoria-musical-ambiente.md` deste diretório — já é o recorte certo (bpm, modos, arco de dinâmica) para este caso, carregue só ele.
+- **Qualquer outro gênero/estilo** (lo-fi, piano clássico, synthwave, jazz, música regional, trilha de cena, etc.): use a skill completa `music-composition`, vendorizada em `../../musica/music-composition/` deste mesmo repositório (fork verbatim de `SJY051/music-composition`, CC BY 4.0 — ver `VENDORED-FROM.md` lá dentro). Siga o processo dela:
+  1. Leia `../../musica/music-composition/SKILL.md` e depois `references/00-navigation.md` para achar os arquivos certos (ela mesma indica, pela pergunta do usuário e pelo gênero, quais 1-3 arquivos carregar — não carregue mais que isso).
+  2. Carregue também o arquivo de gênero correspondente em `references/genres/` (ex. `jazz-styles.md`, `pop-rock.md`, `electronic-edm.md`) — a própria skill reforça isso.
+  3. Extraia dali decisões concretas: tonalidade/modo, faixa de bpm, instrumentação idiomática do gênero, e um arco de forma/dinâmica (ex. `form/popular-song-forms.md`, `form/narrative-and-transitions.md`, `production-aware/energy-and-dynamics.md`).
+  4. **Adapte essas decisões para o ACE-Step** usando as regras da seção "Regras ACE-Step específicas" abaixo — isso é o que esta skill faz que a `music-composition` sozinha não faz (ela não conhece o ACE-Step nem os campos tags/letra/bpm/escala/compasso/duração do nosso workflow).
 
-**Prompt da musica (letra)**: comece com `[instrumental]`. Depois, estruture por seções usando as tags reais que o ACE-Step reconhece (`[Intro]`, `[Verse]`, `[Chorus]`, `[Bridge]`, `[Breakdown]`, `[Outro]` — não use contagem de compassos tipo "4 bars", o modelo não executa isso literalmente). Dentro de cada seção, descreva em prosa a instrumentação e o que entra/sai, seguindo a filosofia: introduzir elementos aos poucos, dinâmica estável/sem picos, tirar camadas na seção mais "fria" em vez de dar uma guinada dramática, final limpo. Dimensione o número e duração aparente das seções para a duração real da faixa (uma faixa de 5 min pede seções mais longas/mais repetidas que uma de 2 min).
+Para as 8 músicas de um mesmo vídeo, varie levemente bpm e escala/modo entre elas (dentro do estilo escolhido) para não soar repetitivo, mantendo a mesma "família sonora" ao longo do vídeo.
 
-**Bpm / Escala Tonal / Compasso**: escolha com base em `references/teoria-musical-ambiente.md`. Compasso quase sempre `4` para este gênero, a menos que o usuário peça algo incomum.
+## Regras ACE-Step específicas (aplicam-se a qualquer gênero)
 
-**Duracao**: sempre o valor calculado no passo 3 (igual nas 8 músicas).
+- **Tags** = legenda curta (gênero, instrumentos, clima). Nunca bpm/escala/tempo aqui — isso vai nos widgets dedicados do node.
+- **Letra** = `[instrumental]` (ou, se o usuário quiser vocal, lyrics reais) + tags de seção reais (`[Intro]`, `[Verse]`, `[Chorus]`, `[Bridge]`, `[Breakdown]`, `[Outro]`) + instrumentação/arranjo descrito em prosa dentro de cada seção. Nunca prometa precisão de compasso (ex. "4 bars") — o ACE-Step não executa isso literalmente, só reage ao texto como contexto.
+- `duration`/`seconds` é um alvo real que o modelo tenta cumprir (diferente do YuE2, que usava um teto de `max_duration`).
+- Dimensione o número e a duração aparente das seções pela duração real da faixa.
 
-## Consultando teoria musical mais a fundo
+Resumo de onde cada coisa vai (combinando a referência escolhida acima com as regras ACE-Step):
 
-`references/teoria-musical-ambiente.md` cobre o que basta para 95% dos casos deste canal (ambient/drone, modos, bpm, arco de dinâmica). Se o usuário pedir algo fora disso (ex.: harmonia jazz, um gênero bem diferente, reharmonização, crítica detalhada de uma composição), existe a skill completa de composição musical em `github.com/SJY051/music-composition` (licença CC BY 4.0 para o conteúdo) — clone-a (`git clone https://github.com/SJY051/music-composition`) e leia `references/00-navigation.md` dela para achar o arquivo certo, carregando só 1-3 arquivos relevantes, nunca o repositório inteiro.
+- **Tags (estilo)**: frase curta com gênero + instrumentos + clima, no idioma e vocabulário que a referência escolhida sugerir para aquele gênero, + palavras-chave de "sem vocal/bateria" se for o caso (ex. ambient: `minimalist ambient drone, warm analog synth pads, slow evolving texture, calm, focused, instrumental, no vocals, no drums, no percussion`; jazz instrumental seria diferente: `smooth modal jazz, upright bass, brushed drums, Rhodes piano, late-night lounge, instrumental`).
+- **Prompt da musica (letra)**: `[instrumental]` (quando aplicável) + seções reais + instrumentação em prosa, seguindo o arco de forma/dinâmica que a referência indicou para aquele gênero (ambient = dinâmica quase plana; outros gêneros podem ter builds/drops, refrões mais fortes etc. — siga o que for idiomático para o gênero escolhido, não force a filosofia "ambient" em um gênero que pede contraste).
+- **Bpm / Escala Tonal**: dentro da faixa e tonalidade/modo que a referência escolhida sugeriu para o gênero.
+- **Compasso**: `4` na grande maioria dos casos; só fuja disso se o gênero/pedido do usuário pedir explicitamente um compasso incomum (valsa, odd meter etc.) e o combo do node suportar.
+- **Duracao**: sempre o valor calculado no passo 3 do fluxo (igual nas 8 músicas, pela limitação técnica já descrita).
 
 ## Formato de saída
 
