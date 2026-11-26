@@ -58,7 +58,7 @@ Faça **uma pergunta por vez**, sempre oferecendo 3-4 sugestões concretas basea
 5. **Estático ou animado em loop?**: perguntar diretamente. Cenários com elementos naturais em movimento (chuva, fogo, fumaça, neon piscando, folhas caindo) combinam melhor com loop animado (como os arquétipos 3 e 7); retratos/composições simétricas de impacto combinam melhor com estático (como os arquétipos 1, 2, 4, 5).
 6. **Paleta de cores**: 2-3 opções coerentes com tema+estilo.
 7. **Mascote/personagem (opcional)**: perguntar se querem uma figura recorrente (original, nunca uma IP de terceiros) ou só cenários/objetos. Se sim, seguir a seção "Personagem principal e Character Sheet" abaixo para gerar o prompt da folha de referência.
-8. **Padrão de título**: mostrar 2-3 exemplos de estrutura coerentes com tudo que foi definido (inspirados nos 7 arquétipos acima) e deixar o usuário escolher ou ajustar. Perguntar se ele quer um template fixo com slot variável (estilo arquétipo 7, útil para publicar com frequência) ou títulos mais únicos por vídeo.
+8. **Padrão de título**: mostrar 2-3 exemplos de estrutura coerentes com tudo que foi definido (inspirados nos 7 arquétipos acima) e deixar o usuário escolher ou ajustar. Perguntar se ele quer um template fixo com slot variável (estilo arquétipo 7, útil para publicar com frequência) ou títulos mais únicos por vídeo. Perguntar também se o canal vai ter **texto embutido na própria imagem** (thumbnail e/ou imagem de fundo do vídeo) — como nos arquétipos 1 (frase curta em minúsculas, bold sem serifa, ex. "flowstate.") e 2 ("JAZZ NOIR" em serifa grande); os arquétipos 4, 5, 6 e 7 **não** usam texto na imagem, só no título do vídeo, então isso não é obrigatório. Se sim, definir junto: a frase/palavra exata (geralmente a mesma do final do título, ou uma citação curta), o estilo de fonte (bold sans-serif minúsculo, serifa de impacto, manuscrita etc.), a posição (centralizado, rodapé, topo) e a cor/contraste — ver seção "Texto na imagem" abaixo.
 9. **Idioma**: inglês (mercado maior) ou português/outro.
 10. **Duração-alvo por vídeo**: pergunte diretamente (1h, 2h, 3h ou um mix longo de 8h+).
 11. **Formato da descrição**: sugerir com base nos 7 estilos observados (tracklist nomeada, narrativa curta, texto reflexivo, manifesto com coleções, checklist+SEO dump, ou boas-vindas fixa). Se optar por tracklist, cada faixa da Fase 2 precisa de nome próprio.
@@ -83,14 +83,24 @@ Explique ao usuário que, no ComfyUI, esse grupo "Character Sheet": (1) roda só
 
 Se o usuário não tiver personagem recorrente, pule esta seção normalmente (nem toda identidade de canal precisa de mascote — ver arquétipos 1, 4 e 5).
 
+## Texto na imagem (thumbnail e imagem do vídeo), se o canal usar
+
+Quando a Fase 1 definir que o canal usa texto embutido na imagem (arquétipos 1 e 2 são a referência — ex. "flowstate." em bold minúsculo sobre o busto de mármore, ou "JAZZ NOIR" em serifa grande sobre fundo vermelho), esse texto **aparece na imagem gerada em si**, tanto na thumbnail quanto na imagem de fundo usada durante o vídeo (normalmente é o mesmo prompt/imagem para os dois — ver Fase 2). Não é um overlay separado feito depois: o texto entra diretamente no prompt de imagem do Krea-2.
+
+O Krea-2 usado no workflow é baseado em Qwen-Image, um modelo bem acima da média em renderizar texto legível dentro da imagem — mas a precisão cai conforme a frase cresce. Ao escrever qualquer prompt de imagem para um canal que usa texto:
+- Escreva a frase exata entre aspas dentro do próprio prompt, nunca deixe implícito. Ex.: `..., bold lowercase sans-serif text "flowstate." centered near the bottom of the frame, clean minimal typography, high contrast against the dark background, no watermark`.
+- Prefira frases de 1 a 5 palavras — acima disso o modelo erra grafia com mais frequência.
+- Descreva o estilo tipográfico explicitamente (serifa/sem serifa, caixa alta/baixa, peso da fonte, posição no quadro) e repita essa descrição em todos os prompts de imagem do canal, para manter consistência visual vídeo a vídeo.
+- Se o canal for animado em loop (arquétipo 3, por exemplo), o texto deve estar no prompt da **imagem estática/frame-base**, não no prompt de animação — a animação só move elementos do cenário, o texto deve ficar fixo e legível.
+
 ## Fase 2 — Gerar 5 sugestões de vídeo
 
 Com a identidade definida (via A ou B), gere **5 sugestões de vídeo**, cada uma com:
 
 1. **Imagem/visual** — depende do que foi definido na Fase 1:
-   - **Se estático**: um único prompt bem detalhado para IA generativa de imagem (sujeito, pose, cenário, iluminação, paleta, estilo/técnica, enquadramento, resolução/aspect ratio). Esse mesmo prompt serve para thumbnail e para o fundo do vídeo.
+   - **Se estático**: um único prompt bem detalhado para IA generativa de imagem (sujeito, pose, cenário, iluminação, paleta, estilo/técnica, enquadramento, resolução/aspect ratio). Esse mesmo prompt serve para thumbnail e para o fundo do vídeo. Se o canal usa texto na imagem (ver seção "Texto na imagem" acima), inclua a frase exata entre aspas e o estilo tipográfico diretamente neste prompt.
    - **Se animado em loop**: entregar **dois prompts separados e bem detalhados**:
-     1. Um prompt de **imagem estática** (para gerar o frame-base/thumbnail) — mesma especificação detalhada do caso estático acima.
+     1. Um prompt de **imagem estática** (para gerar o frame-base/thumbnail) — mesma especificação detalhada do caso estático acima, incluindo o texto na imagem (frase exata + tipografia) se o canal usar.
      2. Um prompt de **animação/vídeo em loop** para uma IA de vídeo (ex. Runway, Kling, Luma, AnimateDiff/ComfyUI video nodes), descrevendo: quais elementos se movem (chuva caindo, fumaça subindo, luzes de neon piscando, folhas balançando, fogo tremulando), a câmera (geralmente estática/sem corte, ou um pan/zoom muito sutil), a duração do clipe-base (ex. 4-10s, que depois será posto em loop contínuo no ComfyUI), e a instrução explícita de que o **início e o fim do clipe devem casar perfeitamente (seamless loop)**, sem saltos visíveis de luz, posição ou movimento.
 2. **Título**: seguindo o padrão definido na Fase 1 (template fixo com slot variável, ou título único por vídeo).
 3. **Descrição**: seguindo o formato escolhido na Fase 1 — com palavras-chave do nicho e, se fizer sentido para o gênero, bloco de hashtags e/ou lista de keywords soltas (estilo Shibuya After Rain) ao final. Sem inventar afirmações sobre o canal que o usuário não confirmou. Lembrar o usuário de marcar o vídeo como conteúdo alterado/sintetizado por IA no YouTube Studio ao publicar.
@@ -133,3 +143,4 @@ Uma faixa do YuE2 costuma durar poucos minutos, então para fechar a duração-a
 - As variações de prompt por vídeo somam material suficiente para a duração-alvo (ou foi avisado que não somam)?
 - Se o formato usa tracklist, cada faixa tem nome próprio?
 - Se há personagem principal, o prompt de character sheet foi entregue (e o de foto de perfil, se aplicável)?
+- Se o canal usa texto na imagem, cada prompt de imagem (estática e, se animado, o frame-base) inclui a frase exata entre aspas e o estilo tipográfico (fonte, posição, cor)?
