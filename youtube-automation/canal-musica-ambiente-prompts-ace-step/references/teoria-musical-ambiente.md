@@ -44,30 +44,29 @@ Dica prática: o campo "escala tonal" do ACE-Step aceita tônica + maior/menor (
 
 ## Formato padrão atual (validado com o usuário, 2ª iteração) — Tags densa + Letra mínima
 
-**Histórico rápido**: duas iterações anteriores foram testadas e **reprovadas pelo usuário em geração real**: (1) um lote com Tags cheia de adjetivo de clima + Letra em prosa estruturada por seção saiu repetitivo, com um ornamento (sino/shimmer) grudado na faixa inteira; (2) mesmo depois de trocar os instrumentos e manter a Letra em prosa por seção, o resultado ainda não ficou bom. O usuário então forneceu a fórmula abaixo (baseada em prática real com IAs generativas de música) como o formato a seguir **a partir de agora por padrão**. Não volte à prosa estruturada por seção a menos que o usuário peça explicitamente para testar isso de novo.
+**Histórico rápido**: três iterações foram testadas em geração real. (1) Tags cheia de adjetivo de clima + Letra em prosa por seção → saiu repetitivo, com um ornamento (sino/shimmer) grudado na faixa inteira. (2) Trocar os instrumentos mas manter a Letra em prosa por seção → ainda não ficou bom. (3) O usuário então forneceu a fórmula abaixo (baseada em prática real com ACE-Step/ACE Studio) como o formato definitivo a partir de agora. Não volte às versões (1)/(2) a menos que o usuário peça explicitamente para testar de novo.
 
 **A partir de agora, o padrão é**:
-- **Letra ("Prompt da música") = apenas `[instrumental]`.** Nada de tags de seção, nada de prosa de instrumentação. Simples assim.
-- **Tags (estilo) = uma única lista densa, separada por vírgula**, construída nesta ordem (4 blocos, sem rotular os blocos no texto final — é só a ordem de composição):
-  1. **Estilo + Função**: ex. `deep space ambient`, `minimalist cinematic ambient`, `dark ambient cinematic underscore`, `atmospheric cinematic instrumental`, `deep focus`.
-  2. **Elementos + Textura**: 3-5 instrumentos/fontes sonoras **concretas** (não adjetivos soltos) — ex. `warm evolving synth pads`, `deep sub drone`, `soft felt piano notes`, `subtle granular texture`, `bowed cello`, `sparse plucked guitar`, `distant synth swells`, `vast hall/cathedral reverb`.
-  3. **Ritmo + Energia**: `slow tempo`/`slow pacing`, `beatless`, `low energy`, `meditative`, `hypnotic` ou `calm`/`peaceful`/`moody` (escolha 1-2, não os três).
-  4. **Restrição** (sempre as mesmas, em todas as 8 faixas do vídeo): `no drums`, `no percussion`, `no vocals`, `no sudden drops`, `no energetic build-up`, `instrumental only`.
+- **Letra ("Prompt da música") = só marcadores de estrutura em minúsculo, colados sem espaço**: `[intro][inst][inst][outro]` (2-3× `[inst]` para uma faixa de ~5 min; menos `[inst]` para faixas mais curtas). Nada de `[Verse]`/`[Chorus]`/prosa — essa é a sintaxe específica do ACE-Step/ACE Studio para instrumental puro.
+- **Tags (estilo) = uma única lista densa, separada por vírgula**, com **5 a 12 tags no total** (nem menos nem mais — tags demais diluem umas às outras), construída nesta ordem (4 blocos + BPM, sem rotular os blocos no texto final):
+  1. **Estilo + Função**: ex. `space ambient`, `dark ambient`, `cinematic ambient`, `minimalist`, `deep focus`.
+  2. **Elementos + Textura**: 2-4 instrumentos/fontes sonoras **concretas e qualificadas** (não genéricas) — ex. `soft felt piano` (não só `piano`), `deep sub drone`, `bowed cello drone`, `subtle granular texture`, `warm sustained strings`, `distant synth swells`, `evolving synth pads`, `vast/wide reverb`.
+  3. **Ritmo + Energia/Restrição**: `beatless`, `slow pacing`, `no drums`, `no percussion`, `no vocals` — só o essencial (2-4 tags, não precisa repetir sinônimos de restrição).
+  4. **BPM numérico ao final**, ex. `58 bpm` — **além** do widget `Bpm` do node (reforça a aderência de tempo), sempre igual ao valor do widget.
 
-**Evite nas Tags**: `epic`, `driving`, `cinematic trailer`, `energetic` — e qualquer palavra que sugira clímax/ação (puxa o modelo para fora do foco calmo). Se mesmo assim a IA acelerar ou meter batida, reforce ainda mais `beatless`, `no drums`, `slow movement`.
+**Evite nas Tags**: `epic`, `driving`, `cinematic trailer`, `energetic`, e **qualquer par de tags contraditório** (ex. `lo-fi` + `hi-fi`, `energetic` + `meditative`). Se mesmo assim a IA acelerar ou meter batida, reforce `beatless`/`no drums`.
 
-**O que varia entre as 8 faixas do mesmo vídeo**: só o bloco 2 (Elementos + Textura) — cada faixa com um par/trio de instrumentos-âncora diferente (ex. synth pad + cello numa, felt piano + brass pad noutra, drone + synth sequencer noutra) — e o bloco 1 (Estilo + Função) pode variar entre as 3 sub-variações do gênero (deep space ambient / cinematic introspective minimal / dark & moody focus). Os blocos 3 e 4 (ritmo/restrição) ficam praticamente **idênticos** nas 8 — isso é intencional, é o que mantém a identidade sonora do vídeo e trava o modelo fora de bateria/vocais/drops.
+**O que varia entre as 8 faixas do mesmo vídeo**: o bloco 2 (Elementos + Textura) — cada faixa com um par de instrumentos-âncora diferente — e o bloco 1 (Estilo + Função) pode alternar entre as 3 sub-variações do gênero (space ambient / cinematic minimalist / dark ambient underscore). O BPM varia faixa a faixa (dentro de 55-70, ver tabela acima) e precisa bater com o widget. O bloco 3 (ritmo/restrição) fica praticamente idêntico nas 8 — intencional, mantém a identidade sonora do vídeo.
 
-**Exemplos de referência (fornecidos pelo usuário, usar como modelo literal de tom/vocabulário)**:
-- `Deep space ambient, dark atmospheric pads, slow evolving drones, subtle granular textures, vast hall reverb, beatless, no drums, no percussion, no vocals, calm, hypnotic, deep focus, instrumental`
-- `Minimalist cinematic ambient, soft felt piano, warm sustained strings, gentle tape texture, spacious reverb, slow pacing, no drums, no sudden changes, introspective, peaceful, instrumental only`
-- `Dark ambient cinematic underscore, deep low-end drone, eerie distant synth swells, sparse atmospheric plucks, heavy reverb, no beat, no percussion, no vocals, moody, focused, instrumental`
+**Exemplos de referência (fornecidos pelo usuário, usar como modelo literal de tom/vocabulário e de estrutura)**:
+- Tags: `space ambient, dark ambient, evolving synth pads, deep sub drone, subtle granular texture, vast reverb, beatless, no drums, no percussion, no vocals, 60 bpm` · Letra: `[intro][inst][outro]`
+- Tags: `cinematic ambient, minimalist, soft felt piano, warm sustained strings, subtle tape texture, wide stereo, slow pacing, no drums, no vocals, 65 bpm` · Letra: `[intro][inst][inst][outro]`
 
 ## Regras ACE-Step específicas (recap)
 
-- **Tags** = a lista densa de 4 blocos descrita acima (estilo+função, elementos+textura, ritmo+energia, restrição). Nunca bpm/escala/tempo numérico aqui — isso vai nos widgets dedicados do node.
-- **Letra** = `[instrumental]`, só isso, no formato padrão atual (ver acima). Só use tags de seção (`[Intro]`/`[Verse]`/`[Chorus]`/`[Bridge]`/`[Outro]`) + prosa se o usuário pedir explicitamente para testar essa variação de novo.
-- Não prometa precisão de compasso — o vocabulário de estrutura do ACE-Step (quando usado) é por seção, não por contagem de bars.
+- **Tags** = a lista densa de 5-12 tags descrita acima (estilo+função, elementos+textura qualificada, ritmo/restrição, BPM numérico ao final). O BPM aqui é além do widget, não em vez dele.
+- **Letra** = marcadores minúsculos colados `[intro][inst][inst][outro]` (ajustar nº de `[inst]` à duração), no formato padrão atual (ver acima). Só use tags de seção (`[Intro]`/`[Verse]`/`[Chorus]`/`[Bridge]`/`[Outro]`) + prosa se o usuário pedir explicitamente para testar essa variação de novo.
+- Não prometa precisão de compasso — o ACE-Step não executa contagem de bars.
 - `duration`/`seconds` é um alvo real que o modelo tenta cumprir (diferente do YuE2, que usava um teto de `max_duration`).
 
 ## Cross-reference
