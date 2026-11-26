@@ -11,7 +11,7 @@ Skills para planejar e automatizar canais de YouTube (identidade de canal, ideia
 ## Instalar só este segmento
 
 ```bash
-npx skills add mathias-cn/skills/skills/youtube-automation/canal-youtube-musica-ambiente
+npx skills add mathias-cn/skills/youtube-automation/canal-youtube-musica-ambiente
 ```
 
-Veja o [README principal](../../README.md) para as outras formas de instalação.
+Veja o [README principal](../README.md) para as outras formas de instalação.

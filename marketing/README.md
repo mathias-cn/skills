@@ -11,7 +11,7 @@ Skills voltadas para prospecção, vendas e aquisição de clientes.
 ## Instalar só este segmento
 
 ```bash
-npx skills add mathias-cn/skills/skills/marketing/prospeccao-vendas-sites
+npx skills add mathias-cn/skills/marketing/prospeccao-vendas-sites
 ```
 
-Veja o [README principal](../../README.md) para as outras formas de instalação.
+Veja o [README principal](../README.md) para as outras formas de instalação.

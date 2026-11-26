@@ -2,14 +2,14 @@
 
 Coleção pessoal de [Agent Skills](https://agentskills.io/specification): pastas com um `SKILL.md` (e arquivos de apoio) que ensinam um agente de IA a executar uma tarefa específica. O formato é um padrão aberto, então as mesmas skills funcionam em Claude (claude.ai e Claude Code), Cursor, Codex e outras ferramentas compatíveis.
 
-As skills são organizadas por segmento/área em subpastas dentro de `skills/`.
+As skills são organizadas por segmento/área, cada um em uma pasta na raiz do repositório.
 
 ## Segmentos e skills disponíveis
 
 | Segmento | Skill | O que faz |
 |---|---|---|
-| [`marketing`](skills/marketing/README.md) | [`prospeccao-vendas-sites`](skills/marketing/prospeccao-vendas-sites/SKILL.md) | Playbook de prospecção e venda de sites e landing pages para pequenos negócios: garimpo de leads, abordagem fria (método GIC), follow-up, prévia, reunião, objeções, preço, nichos e pós-venda. |
-| [`youtube-automation`](skills/youtube-automation/README.md) | [`canal-youtube-musica-ambiente`](skills/youtube-automation/canal-youtube-musica-ambiente/SKILL.md) | Cria a identidade visual e musical de um canal de YouTube de música ambiente (foco, relax, estudo, flowstate, sono) e gera sugestões completas de vídeo: thumbnail/imagem (estática ou prompt de animação em loop), título, descrição e prompts de música para o YuE2 (ComfyUI). |
+| [`marketing`](marketing/README.md) | [`prospeccao-vendas-sites`](marketing/prospeccao-vendas-sites/SKILL.md) | Playbook de prospecção e venda de sites e landing pages para pequenos negócios: garimpo de leads, abordagem fria (método GIC), follow-up, prévia, reunião, objeções, preço, nichos e pós-venda. |
+| [`youtube-automation`](youtube-automation/README.md) | [`canal-youtube-musica-ambiente`](youtube-automation/canal-youtube-musica-ambiente/SKILL.md) | Cria a identidade visual e musical de um canal de YouTube de música ambiente (foco, relax, estudo, flowstate, sono) e gera sugestões completas de vídeo: thumbnail/imagem (estática ou prompt de animação em loop), título, descrição e prompts de música para o YuE2 (ComfyUI). |
 
 Cada segmento tem seu próprio `README.md` listando as skills daquela área com mais detalhe.
 
@@ -18,14 +18,13 @@ Cada segmento tem seu próprio `README.md` listando as skills daquela área com 
 ```
 skills/
 ├── README.md
-└── skills/
-    └── <segmento>/                # ex.: marketing, youtube-automation
-        ├── README.md               # lista e descreve as skills do segmento
-        └── <nome-da-skill>/
-            ├── SKILL.md            # obrigatório: frontmatter (name, description) + instruções
-            ├── references/         # opcional: documentos lidos sob demanda
-            ├── scripts/            # opcional: código executável
-            └── assets/             # opcional: modelos, imagens, fontes
+└── <segmento>/                # ex.: marketing, youtube-automation
+    ├── README.md               # lista e descreve as skills do segmento
+    └── <nome-da-skill>/
+        ├── SKILL.md            # obrigatório: frontmatter (name, description) + instruções
+        ├── references/         # opcional: documentos lidos sob demanda
+        ├── scripts/            # opcional: código executável
+        └── assets/             # opcional: modelos, imagens, fontes
 ```
 
 ## Como instalar
@@ -40,8 +39,8 @@ npx skills add mathias-cn/skills --list
 npx skills add mathias-cn/skills --all
 
 # instalar uma skill específica pelo caminho (inclui o segmento)
-npx skills add mathias-cn/skills/skills/marketing/prospeccao-vendas-sites
-npx skills add mathias-cn/skills/skills/youtube-automation/canal-youtube-musica-ambiente
+npx skills add mathias-cn/skills/marketing/prospeccao-vendas-sites
+npx skills add mathias-cn/skills/youtube-automation/canal-youtube-musica-ambiente
 
 # ou filtrar pelo nome da skill, de qualquer segmento
 npx skills add mathias-cn/skills --skill prospeccao-vendas-sites
@@ -52,7 +51,7 @@ Use `-g` para instalar no diretório do usuário (global) em vez do projeto atua
 
 ### Opção 2: copiar a pasta manualmente
 
-Copie `skills/<segmento>/<nome-da-skill>/` para o diretório de skills da ferramenta. Os caminhos mais comuns são:
+Copie `<segmento>/<nome-da-skill>/` para o diretório de skills da ferramenta. Os caminhos mais comuns são:
 
 | Ferramenta | No projeto | Global |
 |---|---|---|
@@ -68,7 +67,7 @@ Compacte a pasta da skill em `.zip` (com a pasta da skill, ex. `prospeccao-venda
 
 ## Convenções para novas skills
 
-- Toda skill vive em `skills/<segmento>/<nome-da-skill>/`. Escolha um segmento existente ou crie um novo (nome em minúsculas, números e hífens) quando a skill não se encaixar nos atuais, e adicione um `README.md` ao segmento novo seguindo o padrão dos demais.
+- Toda skill vive em `<segmento>/<nome-da-skill>/`, na raiz do repositório. Escolha um segmento existente ou crie um novo (nome em minúsculas, números e hífens) quando a skill não se encaixar nos atuais, e adicione um `README.md` ao segmento novo seguindo o padrão dos demais.
 - Uma pasta por skill, com o nome em minúsculas, números e hífens (sem acentos, sem `--`, até 64 caracteres). O `name` no frontmatter **precisa ser igual ao nome da pasta** (não ao caminho completo).
 - `description` com até 1024 caracteres: diga **o que a skill faz e quando usar**. É o que o agente lê para decidir se carrega a skill, então inclua os termos que o usuário provavelmente usaria.
 - Mantenha o `SKILL.md` abaixo de ~500 linhas e mova o detalhe para `references/`, apontando no `SKILL.md` quando cada arquivo deve ser lido.
