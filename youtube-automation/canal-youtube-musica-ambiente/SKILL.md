@@ -1,6 +1,6 @@
 ---
 name: canal-youtube-musica-ambiente
-description: Use quando o usuário quiser criar identidade e gerar ideias de vídeo (thumbnail, título, descrição, prompts de música para YuE2/ComfyUI, e prompts de imagem/animação) para um canal de YouTube de música ambiente (foco, relax, estudo, flowstate, sono).
+description: Use quando o usuário quiser criar identidade e gerar ideias de vídeo (thumbnail, título, descrição, prompts de música para YuE2/ComfyUI, prompts de imagem/animação, e character sheet do personagem principal) para um canal de YouTube de música ambiente (foco, relax, estudo, flowstate, sono).
 metadata:
   language: pt-BR
   version: "1.0"
@@ -38,7 +38,7 @@ Peça que ele descreva o canal cobrindo os mesmos elementos analisados nos arqu�
 - Instrumentação típica
 - Mood/atmosfera
 - Paleta de cores e estilo visual (fundo, ilustração, fotografia, pixel art, 3D, etc.)
-- Presença ou não de um personagem/mascote recorrente (sempre original)
+- Presença ou não de um personagem/mascote recorrente (sempre original) — se sim, ver seção "Personagem principal e Character Sheet" abaixo
 - **Imagem estática ou loop animado?** (se animado: que tipo de movimento — chuva, fogo, fumaça, luzes piscando, parallax sutil, etc.)
 - Padrão de título (estrutura, tom, se tem sufixo de gênero, se usa um template fixo com slots variáveis como o arquétipo 7)
 - Idioma dos títulos/descrições
@@ -57,13 +57,30 @@ Faça **uma pergunta por vez**, sempre oferecendo 3-4 sugestões concretas basea
 4. **Estilo de arte**: pixel art, pintura digital/aquarela, render 3D cinematográfico, minimalismo fotográfico, ilustração vetorial flat, anime/mangá etc. — sugerido conforme o tema.
 5. **Estático ou animado em loop?**: perguntar diretamente. Cenários com elementos naturais em movimento (chuva, fogo, fumaça, neon piscando, folhas caindo) combinam melhor com loop animado (como os arquétipos 3 e 7); retratos/composições simétricas de impacto combinam melhor com estático (como os arquétipos 1, 2, 4, 5).
 6. **Paleta de cores**: 2-3 opções coerentes com tema+estilo.
-7. **Mascote/personagem (opcional)**: perguntar se querem uma figura recorrente (original, nunca uma IP de terceiros) ou só cenários/objetos.
+7. **Mascote/personagem (opcional)**: perguntar se querem uma figura recorrente (original, nunca uma IP de terceiros) ou só cenários/objetos. Se sim, seguir a seção "Personagem principal e Character Sheet" abaixo para gerar o prompt da folha de referência.
 8. **Padrão de título**: mostrar 2-3 exemplos de estrutura coerentes com tudo que foi definido (inspirados nos 7 arquétipos acima) e deixar o usuário escolher ou ajustar. Perguntar se ele quer um template fixo com slot variável (estilo arquétipo 7, útil para publicar com frequência) ou títulos mais únicos por vídeo.
 9. **Idioma**: inglês (mercado maior) ou português/outro.
 10. **Duração-alvo por vídeo**: pergunte diretamente (1h, 2h, 3h ou um mix longo de 8h+).
 11. **Formato da descrição**: sugerir com base nos 7 estilos observados (tracklist nomeada, narrativa curta, texto reflexivo, manifesto com coleções, checklist+SEO dump, ou boas-vindas fixa). Se optar por tracklist, cada faixa da Fase 2 precisa de nome próprio.
 
 Ao fim, resuma a identidade consolidada em um bloco curto antes de passar para a Fase 2, e confirme com o usuário.
+
+## Personagem principal e Character Sheet (se houver mascote)
+
+Se o canal tem (ou vai ter) um personagem/mascote recorrente, pergunte:
+
+> "Você já tem esse personagem definido/desenhado, ou quer que eu monte a descrição dele com você agora?"
+
+- **Se já tem**: peça para descrever (espécie/forma, roupa/acessórios fixos, paleta de cores, expressão/personalidade visual, qualquer traço distintivo). Se o usuário já tiver imagens dele, avise que pode carregá-las direto nos nodes "Imagem de referência 1/2/3" do grupo Character Sheet no ComfyUI.
+- **Se não tem**: construa a descrição junto, uma pergunta por vez, coerente com o tema/estilo visual já definidos na Fase 1 (espécie/forma do personagem, roupa/acessórios, paleta, expressão).
+
+Com a descrição fechada, monte um **prompt de character sheet** pronto para colar no node "Character Sheet - Prompt" do workflow do ComfyUI, seguindo sempre esta estrutura (fundo branco, múltiplos ângulos, igual a uma folha de referência de personagem/lookbook):
+
+> `character reference sheet, turnaround sheet, consistent character design, same outfit and facial features in every view, clean pure white background, studio lighting, fashion lookbook photography style, large full body front view, full body side profile view, full body back view, two close-up face portrait crops, [descrição específica do personagem: espécie/forma, roupa, cores, acessórios, expressão], high detail, no text, no watermark`
+
+Explique ao usuário que, no ComfyUI, esse grupo "Character Sheet": (1) roda só com esse prompt se ele não tiver imagens de referência, ou (2) usa imagens de referência (se ele carregar 1-3 fotos/desenhos do personagem e marcar o checkbox "Usar imagem de referência?") para manter a aparência consistente. A imagem final dessa folha alimenta automaticamente os checkboxes "Usar imagem de referência?" dos grupos de Thumbnail e de Foto de Perfil do YouTube no mesmo workflow — assim o personagem aparece consistente em thumbnails e na foto de perfil do canal.
+
+Se o usuário não tiver personagem recorrente, pule esta seção normalmente (nem toda identidade de canal precisa de mascote — ver arquétipos 1, 4 e 5).
 
 ## Fase 2 — Gerar 5 sugestões de vídeo
 
@@ -77,6 +94,8 @@ Com a identidade definida (via A ou B), gere **5 sugestões de vídeo**, cada um
 2. **Título**: seguindo o padrão definido na Fase 1 (template fixo com slot variável, ou título único por vídeo).
 3. **Descrição**: seguindo o formato escolhido na Fase 1 — com palavras-chave do nicho e, se fizer sentido para o gênero, bloco de hashtags e/ou lista de keywords soltas (estilo Shibuya After Rain) ao final. Sem inventar afirmações sobre o canal que o usuário não confirmou. Lembrar o usuário de marcar o vídeo como conteúdo alterado/sintetizado por IA no YouTube Studio ao publicar.
 4. **Prompts de música para o YuE2**: ver seção abaixo — múltiplos prompts da mesma linha estética para render um vídeo com a duração-alvo definida na Fase 1.
+
+Se o canal tiver personagem principal definido (seção acima), ofereça também gerar um **prompt para a foto de perfil do canal no YouTube** (formato 1:1, composição centralizada e reconhecível mesmo cortada em círculo), para usar no grupo "Foto de Perfil" do workflow do ComfyUI — com a mesma opção de referência pela Character Sheet.
 
 ## Como montar os prompts de música (guia YuE2)
 
@@ -112,3 +131,4 @@ Uma faixa do YuE2 costuma durar poucos minutos, então para fechar a duração-a
 - Todos os prompts do YuE2 começam com idioma, têm tag de vocal/instrumental, e não misturam gêneros conflitantes?
 - As variações de prompt por vídeo somam material suficiente para a duração-alvo (ou foi avisado que não somam)?
 - Se o formato usa tracklist, cada faixa tem nome próprio?
+- Se há personagem principal, o prompt de character sheet foi entregue (e o de foto de perfil, se aplicável)?

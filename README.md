@@ -9,7 +9,7 @@ As skills são organizadas por segmento/área, cada um em uma pasta na raiz do r
 | Segmento | Skill | O que faz |
 |---|---|---|
 | [`marketing`](marketing/README.md) | [`prospeccao-vendas-sites`](marketing/prospeccao-vendas-sites/SKILL.md) | Playbook de prospecção e venda de sites e landing pages para pequenos negócios: garimpo de leads, abordagem fria (método GIC), follow-up, prévia, reunião, objeções, preço, nichos e pós-venda. |
-| [`youtube-automation`](youtube-automation/README.md) | [`canal-youtube-musica-ambiente`](youtube-automation/canal-youtube-musica-ambiente/SKILL.md) | Cria a identidade visual e musical de um canal de YouTube de música ambiente (foco, relax, estudo, flowstate, sono) e gera sugestões completas de vídeo: thumbnail/imagem (estática ou prompt de animação em loop), título, descrição e prompts de música para o YuE2 (ComfyUI). |
+| [`youtube-automation`](youtube-automation/README.md) | [`canal-youtube-musica-ambiente`](youtube-automation/canal-youtube-musica-ambiente/SKILL.md) | Cria a identidade visual e musical de um canal de YouTube de música ambiente (foco, relax, estudo, flowstate, sono) e gera sugestões completas de vídeo: thumbnail/imagem (estática ou prompt de animação em loop), título, descrição, character sheet do personagem principal e prompts de música para o YuE2 (ComfyUI). |
 
 Cada segmento tem seu próprio `README.md` listando as skills daquela área com mais detalhe.
 
