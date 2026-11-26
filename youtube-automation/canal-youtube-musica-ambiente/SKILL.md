@@ -133,6 +133,8 @@ Regras:
 
 Uma faixa do YuE2 costuma durar poucos minutos, então para fechar a duração-alvo definida na Fase 1 (1h, 2h, 3h, 8h etc.) o usuário precisa gerar várias faixas da mesma linha estética. Para cada sugestão de vídeo, entregue **de 6 a 10 variações de prompt** dentro do mesmo gênero/mood geral, variando sutilmente instrumentação, tempo ou intensidade — isso evita repetição perceptível ao longo do vídeo, mas mantém a coesão estilística. Se a duração-alvo for muito maior que o número de prompts entregues (ex. 8h), avise o usuário que ele provavelmente vai repetir/alternar os mesmos prompts várias vezes ou pedir mais variações, e ofereça gerar mais. Se o formato de descrição escolhido usa tracklist nomeada (estilo Lemuria), dê um nome curto e evocativo para cada faixa/prompt (ex. "The Invisible Wall", "Alone Together") em vez de "Faixa 1".
 
+No workflow do ComfyUI, o Grupo 3 (loop de músicas) tem **uma caixa de texto por prompt** ("Prompt de música 1 de 8" até "8 de 8") — cole cada uma das 6-10 variações numa caixa diferente (de cima para baixo) e o loop gera **uma música por prompt preenchido**, não N cópias do mesmo prompt. Avise o usuário disso ao entregar as variações, para ele saber onde colar cada uma.
+
 ## Checklist antes de entregar as 5 sugestões
 
 - Identidade visual e musical está consolidada e confirmada pelo usuário (incluindo estático vs. animado, duração-alvo e formato de descrição)?
