@@ -144,6 +144,18 @@ Regras:
 - Nunca descrever a história/tema da música no prompt de estilo — isso é para a letra (lyrics), não para o estilo. Se o canal for instrumental, nem se aplica.
 - Sempre incluir a tag vocal (gênero + tom) quando houver voz; quando for instrumental, deixar isso explícito ("instrumental, no vocals") em vez de omitir.
 
+**Importante para canais instrumentais**: segundo os próprios criadores do modelo (discussão oficial na issue #18 do GitHub do YuE), deixar a caixa de **Lyrics** 100% vazia no workflow **não garante** que o YuE2 gere o resultado sem voz — o modelo foi treinado majoritariamente para gerar música com vocal, e uma string vazia pode não ser suficiente para sinalizar "sem letra". Além de remover toda palavra relacionada a vocal do prompt de estilo (acima), oriente o usuário a preencher a caixa de Lyrics do workflow com marcadores de seção sem nenhuma palavra, por exemplo:
+```
+[Verse]
+
+
+[Chorus]
+
+
+[Outro]
+```
+em vez de deixá-la totalmente em branco. Mesmo assim, o resultado pode variar — se ainda aparecer vocal, é esperado precisar ajustar.
+
 ### Gerando a duração-alvo com faixas coerentes
 
 Uma faixa do YuE2 costuma durar poucos minutos, então para fechar a duração-alvo definida na Fase 1 (1h, 2h, 3h, 8h etc.) o usuário precisa gerar várias faixas da mesma linha estética. Para cada sugestão de vídeo, entregue **de 6 a 10 variações de prompt** dentro do mesmo gênero/mood geral, variando sutilmente instrumentação, tempo ou intensidade — isso evita repetição perceptível ao longo do vídeo, mas mantém a coesão estilística. Se a duração-alvo for muito maior que o número de prompts entregues (ex. 8h), avise o usuário que ele provavelmente vai repetir/alternar os mesmos prompts várias vezes ou pedir mais variações, e ofereça gerar mais. Se o formato de descrição escolhido usa tracklist nomeada (estilo Lemuria), dê um nome curto e evocativo para cada faixa/prompt (ex. "The Invisible Wall", "Alone Together") em vez de "Faixa 1".
